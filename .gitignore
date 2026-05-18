@@ -2,6 +2,7 @@
 data/applications.md
 data/pipeline.md
 data/scan-history.tsv
+data/follow-ups.md
 reports/*.md
 !reports/.gitkeep
 output/*
@@ -11,20 +12,41 @@ batch/logs/*
 batch/batch-state.tsv
 batch/batch-input.tsv
 batch/tracker-additions/*.tsv
+batch/tracker-additions/merged/
 !batch/tracker-additions/.gitkeep
 jds/*
 !jds/.gitkeep
 
 # User config and customization (never auto-updated)
+cv.md
 config/profile.yml
 portals.yml
 modes/_profile.md
 .update-dismissed
 .update-lock
 
+# Sensitive personal files — email/LinkedIn scrapes, outreach, forms
+ochin-email.yml
+ochin-linkedin.yml
+linkedin-outreach.md
+outreach-log.md
+adp-form.md
+paylocity-step1-state.png
+
+# Browser automation state (may contain session cookies)
+.playwright-mcp/
+
+# Apply scripts (contain hardcoded PII)
+scripts/
+
+# Scratch / temp
+scratch/
+tmp/
+
 # Generated
 .resolved-prompt-*
 node_modules/
+package-lock.json
 
 # OS
 .DS_Store
