@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "gmail-school": {
+      "command": "node",
+      "args": [
+        "/Users/nathanaeljohnson/GitHub/career-ops/vendor/gmail-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "GMAIL_OAUTH_PATH": "/Users/nathanaeljohnson/.gmail-mcp/gcp-oauth.keys.json",
+        "GMAIL_CREDENTIALS_PATH": "/Users/nathanaeljohnson/.gmail-mcp/school/credentials.json"
+      }
+    },
+    "gmail-personal": {
+      "command": "node",
+      "args": [
+        "/Users/nathanaeljohnson/GitHub/career-ops/vendor/gmail-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "GMAIL_OAUTH_PATH": "/Users/nathanaeljohnson/.gmail-mcp/gcp-oauth.keys.json",
+        "GMAIL_CREDENTIALS_PATH": "/Users/nathanaeljohnson/.gmail-mcp/personal/credentials.json"
+      }
+    },
+    "gmail-personal2": {
+      "command": "node",
+      "args": [
+        "/Users/nathanaeljohnson/GitHub/career-ops/vendor/gmail-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "GMAIL_OAUTH_PATH": "/Users/nathanaeljohnson/.gmail-mcp/gcp-oauth.keys.json",
+        "GMAIL_CREDENTIALS_PATH": "/Users/nathanaeljohnson/.gmail-mcp/personal2/credentials.json"
+      }
+    }
+  }
+}
