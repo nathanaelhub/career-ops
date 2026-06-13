@@ -3,6 +3,8 @@ data/applications.md
 data/pipeline.md
 data/scan-history.tsv
 data/follow-ups.md
+data/archive-pc2/
+data/*.bak
 reports/*.md
 !reports/.gitkeep
 output/*
@@ -57,3 +59,9 @@ package-lock.json
 .claude/settings.local.json
 .claude/memory/
 career-dashboard
+
+# IDE / tool artifacts
+.antigravitycli/
+
+# Gmail inbox feature: vendored third-party MCP server (rebuild via docs/gmail-integration.md)
+vendor/

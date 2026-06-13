@@ -36,6 +36,7 @@ Determine the mode from `$mode`:
 | `followup` | `followup` |
 | `update` | `update` |
 | `cover` | `cover` |
+| `inbox` | `inbox` (custom: Gmail sweep → pipeline/tracker/follow-ups; see `modes/_profile.md`) |
 
 **Auto-pipeline detection:** If `$mode` is not a known sub-command AND contains JD text (keywords: "responsibilities", "requirements", "qualifications", "about the role", "we're looking for", company name + role) or a URL to a JD, execute `auto-pipeline`.
 
