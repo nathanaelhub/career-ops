@@ -29,6 +29,9 @@ argument-hint: "<Company> <Role> [tracker #]"
 5. **Tracker**: flip the row's PDF cell to ✅ and append `CV ready: output/...pdf` to notes
    (edit existing row; if the role isn't tracked yet, add via TSV + `node merge-tracker.mjs`).
 6. Report: PDF path, page count, Applys path, tracker row touched.
+7. **Offer pre-flight**: suggest running `/cv-preflight {Company}` to score the packaged
+   CV against the employer-side screening rubric before it goes out (skip if the user
+   already pre-flighted this CV in the session).
 
 ## Guardrails
 - Never fabricate experience/metrics — reword real ones with JD vocabulary only.
