@@ -96,3 +96,21 @@ This file accumulates your best interview stories over time. Each evaluation (Bl
 **R (Result):** Teams shipped applied AI projects; reference implementations folded into curriculum development.
 **Reflection:** Short feedback loops beat big upfront designs — the Agile habit of shipping a thin working slice first transfers to any tooling or analytics work.
 **Best for questions about:** Agile/iterative development, mentoring, collaboration with functional experts, teaching/communication
+
+### [Data Ethics / Compliance] Privacy-as-a-QA-Gate on Sensitive Healthcare Data
+**Source:** Report #068 — The Trade Desk — Data Support Analyst I
+**S (Situation):** At ROX and Amplion I worked on regulated healthcare data feeding client-facing reports, where a privacy slip or a wrong record is a client-trust failure, not just a bug.
+**T (Task):** Validate data outputs for accuracy AND ensure sensitive data was handled correctly before anything reached a client.
+**A (Action):** Built SQL data-integrity routines that flagged anomalous and sensitive records as a QA gate before client delivery, and documented the checks so privacy review was part of the pipeline rather than an afterthought.
+**R (Result):** Outputs cleared for client delivery with no data-trust incidents across 10 months of production support.
+**Reflection:** Treating privacy and compliance as a QA gate — not a post-hoc review — is what makes data outputs actually shippable in regulated contexts.
+**Best for questions about:** data ethics, data privacy, compliance, QA, handling sensitive/regulated data, attention to detail
+
+### [Requirements Translation] Use-Case Elicitation That Became the Report Spec
+**Source:** Report #073 — HCA Healthcare — Digital Product Analyst
+**S (Situation):** At Amplion, stakeholders across multiple hospital sites wanted analytics, but the tools that existed went largely unused and the "requirements" were vague verbal asks.
+**T (Task):** Turn ambiguous stakeholder requests into a concrete, buildable specification for the reports.
+**A (Action):** Interviewed stakeholders, identified and documented the key use cases around their actual workflows, and translated those use cases into the requirements that defined four Power BI/Tableau reports.
+**R (Result):** The delivered tools drove a 30% increase in user adoption because they were built to the documented use cases, not to assumptions.
+**Reflection:** Requirements written around the user's workflow — not the tool's features — are what actually get built and used; that is the same discipline as translating business needs into user stories on a product pod.
+**Best for questions about:** requirements gathering, translating business needs into user stories, product/BA work, discovery, stakeholder interviews, Agile backlog

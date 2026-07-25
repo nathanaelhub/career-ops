@@ -20,10 +20,13 @@ argument-hint: "<Company> <Role> [tracker #]"
      reworded with the JD's vocabulary (never invent skills). Anchor with the most relevant
      proof point (healthcare BI metrics, $10M airline ML project, LLM capstone).
    - `{{COMPETENCIES}}`: 8 `<span class="competency-tag">` tags matching JD keywords.
-2. **Generate** to /tmp HTML, then:
-   `node generate-pdf.mjs /tmp/cv-nathanael-johnson-{slug}.html output/cv-nathanael-johnson-{slug}-{YYYY-MM-DD}.pdf --format=letter`
-3. **Verify**: must be **1 page** (tighten summary if 2); contact email must be
-   **nathanaeljdj@gmail.com** (never the school address — see memory `cv-contact-email`).
+2. **Generate** to scratchpad HTML (generate-pdf refuses to WRITE the PDF outside the
+   project, so the PDF goes to `output/`), then:
+   `node generate-pdf.mjs {scratchpad}/cv-nathanael-johnson-{slug}.html output/cv-nathanael-johnson-{slug}-{YYYY-MM-DD}.pdf --format=letter --max-pages=1 --strict-pages`
+   `--strict-pages` makes a 2-page render a hard failure — tighten `{{SUMMARY}}` and
+   regenerate until it passes.
+3. **Verify**: contact email must be **nathanaeljdj@gmail.com** (never the school
+   address — see memory `cv-contact-email`); page count is enforced by --strict-pages.
 4. **Copy to the Desktop archive** (memory `applys-folder-convention`):
    `Apply'26/Applys/{Company}/Nathanael Johnson - Resume - {Company}.pdf` (mkdir if missing).
 5. **Tracker**: flip the row's PDF cell to ✅ and append `CV ready: output/...pdf` to notes
