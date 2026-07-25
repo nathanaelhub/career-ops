@@ -30,5 +30,8 @@ fi
 
 mkdir -p "$HOME/.gmail-mcp/$ACCOUNT"
 echo "Authorizing '$ACCOUNT' account → $CREDS"
-GMAIL_OAUTH_PATH="$OAUTH_KEYS" GMAIL_CREDENTIALS_PATH="$CREDS" node "$SERVER" auth
+# Use the 127.0.0.1 loopback callback (not localhost): the auth server binds
+# 127.0.0.1:3000, but "localhost" can resolve to IPv6 ::1 first and hit another
+# process on *:3000 (e.g. a Next.js dev server), breaking the OAuth redirect.
+GMAIL_OAUTH_PATH="$OAUTH_KEYS" GMAIL_CREDENTIALS_PATH="$CREDS" node "$SERVER" auth "http://127.0.0.1:3000/oauth2callback"
 echo "Done. Tokens saved to $CREDS"
