@@ -19,3 +19,16 @@ need to special-case the Updates category.
   those for the user instead.
 - Batch in groups of ~20 to avoid Gmail "too many concurrent requests"; retry
   any failures once.
+
+## Application form filling (applies to `apply` mode and Desktop handoff prompts)
+
+- **Never trust ATS resume-parse prefill.** After uploading the resume, always open the
+  parsed Education and Experience pages and verify them field by field. (Taleo mangled 3
+  fields on the 2026-09-05 Optum app: blank BS institution, employer garbled to
+  "Lipscomb University, College" with title "Computing Assistant", current role not
+  flagged current.)
+- Street address lives in `config/profile.yml` (`street_address`) — use it; don't stall
+  the form waiting for it.
+- Work-authorization answers, always truthful: authorized to work in the US = **Yes**
+  (F-1 OPT EAD); will require sponsorship now or in the future = **Yes**. A combined
+  "citizen OR no-sponsorship-needed" question = **No**.
