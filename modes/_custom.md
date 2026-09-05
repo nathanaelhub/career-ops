@@ -27,6 +27,13 @@ need to special-case the Updates category.
   fields on the 2026-09-05 Optum app: blank BS institution, employer garbled to
   "Lipscomb University, College" with title "Computing Assistant", current role not
   flagged current.)
+- **Greenhouse blanks the contact fields when the resume attaches.** Confirmed 2026-09-05 on
+  both NMI and Scopely: attaching the resume cleared First Name, Last Name, Email, Country and
+  Phone back to empty. Values set programmatically (`form_input`) do not survive it either, and
+  single fields can drop silently (Scopely's phone country code; a stray click cleared a race
+  combobox on NMI). So: upload the resume FIRST, then fill every text field with real keystrokes
+  (click, then type), then scroll the entire form top to bottom and verify field by field before
+  Submit. Two failure shapes are now confirmed: Taleo mangles parsed values, Greenhouse blanks them.
 - Street address lives in `config/profile.yml` (`street_address`) — use it; don't stall
   the form waiting for it.
 - Work-authorization answers, always truthful: authorized to work in the US = **Yes**
