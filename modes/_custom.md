@@ -39,3 +39,40 @@ need to special-case the Updates category.
 - Work-authorization answers, always truthful: authorized to work in the US = **Yes**
   (F-1 OPT EAD); will require sponsorship now or in the future = **Yes**. A combined
   "citizen OR no-sponsorship-needed" question = **No**.
+
+## Tracker row numbers in handoff prompts (hard rule)
+
+Never quote the row numbers you wrote into a TSV. `merge-tracker.mjs` renumbers silently
+when a parallel session has taken those numbers. On 2026-09-05 a Desktop batch was handed
+#389–396; the merge had shifted them to #392–399 because another session inserted
+Robinhood/Affirm/AppLovin at #389–391 in between.
+
+**Always read the merged rows back out of `data/applications.md` and quote those numbers.**
+Same for report numbers — use `node reserve-report-num.mjs --count N` before any parallel
+fan-out.
+
+## Liveness evidence (hard rule)
+
+A `firecrawl_search` snippet is not proof a posting is live — it is an index entry that can
+be weeks stale. Only a live fetch (`maxAge: 0`) of the **employer's own ATS req URL** counts.
+Aggregators (LinkedIn, Indeed, Built In, ZipRecruiter, Lensa, BeBee, Teal, jobright) are for
+discovery only. Record the canonical URL in the tracker note; a row without one is
+`UNVERIFIED`, not packageable. Full rationale in the `cops-liveness` skill, Step 0.
+
+Re-read **level and sponsorship** from the canonical JD before packaging too — Oracle #385
+and Husch Blackwell #406 both scored well from aggregator reads and collapsed on the real JD.
+
+## Re-posted reqs at a company you already applied to (hard rule)
+
+When adding a lead at a company that already has a tracker row with a similar title,
+**put the req/job/posting ID in the notes column of the new TSV** (e.g. `job id 100508890224`).
+Without it `merge-tracker.mjs` fuzzy-matches on company+role and silently *updates* the
+existing row instead of adding one — overwriting its date and score and appending the new
+req's text onto an application that was already submitted.
+
+Hit on 2026-09-15: Molina's new "Level 1 Analyst/SQL" req merged into #137 (applied
+2026-06-28), rewriting that row's date to 2026-09-15 and its score 3.8→4.2. Repaired, then
+re-added as #417 with the req ID, which merged cleanly as a new row.
+
+**After every merge, read the rows back** and confirm `+N added` matches what you intended.
+A `🔄 updated` count you didn't expect means a row was overwritten — check it before moving on.
