@@ -31,7 +31,19 @@ fi
 mkdir -p "$HOME/.gmail-mcp/$ACCOUNT"
 echo "Authorizing '$ACCOUNT' account → $CREDS"
 # Use the 127.0.0.1 loopback callback (not localhost): the auth server binds
-# 127.0.0.1:3000, but "localhost" can resolve to IPv6 ::1 first and hit another
-# process on *:3000 (e.g. a Next.js dev server), breaking the OAuth redirect.
-GMAIL_OAUTH_PATH="$OAUTH_KEYS" GMAIL_CREDENTIALS_PATH="$CREDS" node "$SERVER" auth "http://127.0.0.1:3000/oauth2callback"
+# 127.0.0.1 on purpose: "localhost" can resolve to IPv6 ::1 first and hit another
+# process, breaking the OAuth redirect.
+#
+# Port: NOT 3000. Next.js 16 dev servers bind IPv4 127.0.0.1:3000 directly, which
+# collides head-on (EADDRINUSE) — the old 127.0.0.1 trick only dodged the IPv6
+# binding used by older Next versions. 3000 is the user's dev-server port and is
+# never taken from them. GMAIL_AUTH_PORT overrides if 3456 is ever busy too.
+# The vendored auth server derives its listen port from this URL (local patch).
+# Desktop OAuth clients accept any loopback port, so no Google console change is needed.
+AUTH_PORT="${GMAIL_AUTH_PORT:-3456}"
+if command -v lsof >/dev/null 2>&1 && lsof -nP -iTCP:"$AUTH_PORT" -sTCP:LISTEN >/dev/null 2>&1; then
+  echo "ERROR: port $AUTH_PORT is already in use. Re-run with GMAIL_AUTH_PORT=<free port>." >&2
+  exit 1
+fi
+GMAIL_OAUTH_PATH="$OAUTH_KEYS" GMAIL_CREDENTIALS_PATH="$CREDS" node "$SERVER" auth "http://127.0.0.1:${AUTH_PORT}/oauth2callback"
 echo "Done. Tokens saved to $CREDS"
