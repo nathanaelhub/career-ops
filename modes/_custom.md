@@ -76,3 +76,35 @@ re-added as #417 with the req ID, which merged cleanly as a new row.
 
 **After every merge, read the rows back** and confirm `+N added` matches what you intended.
 A `🔄 updated` count you didn't expect means a row was overwritten — check it before moving on.
+
+## Never hand-edit tracker columns by index (hard rule)
+
+Two corruptions came from this, both mine: #137 (score written into status) and #433 (✅ written
+into the report column). The off-by-one is easy to get wrong because the leading `|` makes
+`split('|')` 0-indexed differ from `awk -F'|'` 1-indexed:
+
+| field | awk `$n` | python `split('|')[n]` |
+|---|---|---|
+| num | $2 | [1] |
+| date | $3 | [2] |
+| company | $4 | [3] |
+| role | $5 | [4] |
+| score | $6 | [5] |
+| status | $7 | [6] |
+| pdf | $8 | [7] |
+| report | $9 | [8] |
+| notes | $10 | [9] |
+
+**Use the tooling instead:** `set-status.mjs` for status and notes, `merge-tracker.mjs` for adds
+and PDF-flag sync. If a raw edit is genuinely unavoidable, print every column before and after
+and diff them — never trust the index.
+
+## Check for an existing row before adding a lead (hard rule)
+
+On 2026-10-15 a "new" HSAG Analyst I lead was added as #432 when #118 was the same company, same
+role, already **Applied 2026-04-14** — the Lever req is evergreen (createdAt 2025-10-02), so the
+"new" posting was the same one. Duplicate removed, evidence folded into #118.
+
+Before writing any lead TSV: `grep -i '<company>' data/applications.md` and read the roles. An
+evergreen ATS req (Lever/Greenhouse postings open 6+ months) is the specific trap — it resurfaces
+in alerts indefinitely and looks new every time. Check the ATS `createdAt` when it is available.

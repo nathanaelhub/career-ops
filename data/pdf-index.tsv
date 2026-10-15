@@ -1,4 +1,4 @@
-# report	pdf	html	format	date — written by generate-pdf.mjs, do not edit
+# report	pdf	html	format	date	kind - written by generate-pdf.mjs, do not edit
 	output/cv-nathanael-johnson-hca-2026-07-21.pdf		letter	2026-07-21
 	output/cv-nathanael-johnson-nephila-2026-07-21.pdf		letter	2026-07-21
 	output/cv-nathanael-johnson-bcbst-2026-07-24.pdf		letter	2026-07-24
@@ -42,3 +42,5 @@
 	output/_cops/Block/Nathanael Johnson - Cover Letter - Block.pdf	output/_cops/Block/cops-cl-Block.html	letter	2026-09-30
 	output/_cops/AppLovin-DataScientist/Nathanael Johnson - Resume - AppLovin.pdf	output/_cops/AppLovin-DataScientist/cops-cv-AppLovin-DataScientist.html	letter	2026-09-30
 	output/_cops/AppLovin-DataScientist/Nathanael Johnson - Cover Letter - AppLovin.pdf	output/_cops/AppLovin-DataScientist/cops-cl-AppLovin-DataScientist.html	letter	2026-09-30
+	output/cv-nathanael-johnson-bmi-revenue-intelligence-2026-10-15.pdf	output/cv-bmi-revenue-intelligence-2026-10-15.html	letter	2026-10-15
+	output/cv-nathanael-johnson-medpace-2026-10-15.pdf	output/cv-nathanael-johnson-medpace.html	letter	2026-10-15	cv

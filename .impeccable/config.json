@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "scripts/cv-template-nathanael.html"
+        ],
+        "createdAt": "2026-10-15T22:40:18.682Z",
+        "reason": "Print résumé template (8.5in letter PDF): compact 10-11px body is intentional, standard résumé typography; long-shipped user-layer design"
+      }
+    ]
+  }
+}
