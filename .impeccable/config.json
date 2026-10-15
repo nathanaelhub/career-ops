@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-10-15T22:40:18.682Z",
         "reason": "Print résumé template (8.5in letter PDF): compact 10-11px body is intentional, standard résumé typography; long-shipped user-layer design"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "scripts/cv-template-nathanael.html"
+        ],
+        "createdAt": "2026-10-15T22:43:42.854Z",
+        "reason": "Print résumé template rendered to letter-size PDF: 10-10.5px body/link sizing is standard print CV typography; no interactive targets exist in a printed/PDF document"
       }
     ]
   }
