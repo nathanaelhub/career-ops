@@ -1,99 +1,101 @@
-# HANDOFF — career-ops session (2026-10-23 → 2026-10-26)
+# HANDOFF — career-ops session wrap-up (2026-10-26)
 
-> This repo is a **public** fork (`nathanaelhub/career-ops`), so this file leaves out personal details on purpose. Most of the user data it refers to (CV, tracker, pipeline, reports) is gitignored. **It is not in git and will not transfer by cloning.** See section F.
+## ⚠️ Machine-move critical first
+The live job-search data is **gitignored and will NOT arrive via git clone/pull**:
+`data/applications.md` (tracker, ~419 rows), `data/pipeline.md` (inbox), `data/scan-history.tsv`,
+`data/discard.log`, `data/follow-ups.md`, `data/scan-runs.tsv`, `output/` (generated CVs), `jds/`.
+**Copy the entire `~/GitHub/career-ops` directory to the new computer** (or at minimum the `data/`,
+`output/`, and `jds/` folders on top of a clone). Also verify `cv.md`, `config/profile.yml`,
+`modes/_profile.md`, `modes/_custom.md`, `portals.yml` arrived (`git ls-files <file>` shows if tracked).
 
-## A. What this project and session were about
+## a) What this project and session were about
+career-ops: AI job-search pipeline (scanner → triage → evaluation reports → tailored CV/PDF →
+tracker → follow-ups) for **Nathanael Johnson** — M.S. Applied AI (Lipscomb, Aug 2025), F-1 OPT,
+**needs future H-1B sponsorship**, Nashville TN, targeting entry-level Data/BI/Product Analyst,
+Junior DS/Applied AI, Analytics Engineer ($70–95K target; new-grad DS bands above that are fine).
+Recent sessions (Oct 16–24): triaged the 135-row pending inbox, ran a parallel evaluation batch,
+prepared the Pinterest application, and ranked the next apply candidates.
 
-career-ops is an AI job-search pipeline: portal scanning, offer evaluation, tailored CVs, a tracker, and follow-ups. It's a fork of santifer/career-ops. This session:
+## b) Finished
+- **Triage (10/16):** 135 pending → 116 deterministic drops (logged to `data/discard.log` with
+  reasons) → 19 shortlist → 8 sent to parallel evaluators.
+- **Evaluations merged into tracker** (reports in `reports/`, all with archived JDs):
+  - #435 Pinterest Master's Univ Grad DS — **4.1/5 APPLY** (evaluated by parallel Desktop session;
+    package in `~/Desktop/Apply'26/Applys/Pinterest-DataScientist/`)
+  - #438 Pinterest Grad MLE 3.0 (JD says apply once — spend it on #435)
+  - #441 Brex DS II 2.8 · #440 Cohere Health DS II 2.6 · #439 Block BI Analyst 2.3 (hidden senior
+    recon role) · #442 Datalab USA 1.8 **SKIP** (JD refuses F-1 OPT/H-1B by name) ·
+    #437 UIC AI.Health4All 1.6 (PhD minimum) · #443 Stripe DA NYC 1.6 (6+ yrs; folded into row #178)
+  - Slot 436 released (duplicate of #435).
+- **Applications recorded Applied 10/16:** Medpace #408, Block DS Payments #434, AppLovin #430
+  (follow-ups seeded: #434 due 10/23, #430 due 10/22, #408 seeded).
+- **Claude Desktop apply prompt** for Pinterest written:
+  `~/Downloads/claude-desktop-apply-prompt-2026-10-16-pinterest.md` (user ran it 10/16).
+- Pipeline health: `verify-pipeline.mjs` 0 errors (44 pre-existing warnings).
 
-1. Updated the system from v1.34.0 to v1.36.0 (`update-system.mjs`).
-2. Built a custom **LinkedIn discovery scanner** (`/linkedin-scan`), adapted from MadsLorentzen/ai-job-search (MIT). LinkedIn's guest endpoints are used for discovery only. Every hit has to be confirmed on the employer's own ATS before it's evaluated.
-3. Ran it and resolved about 53 LinkedIn hits to their employers. Most were cut for visa sponsorship (F-1 OPT; any posting with "no sponsorship now or future", a citizenship requirement or a clearance is a hard discard) or for experience level.
-4. Evaluated and packaged 2 roles:
-   - #446 Optum Data Analyst, Payment Integrity (req 2381793), score 4.0
-   - #447 VUMC BI Developer, TIPQC (R-68625), score 4.3
-5. Wrote a Claude Desktop apply prompt and tested how far Claude Code can drive Claude Desktop through GUI automation.
+## c) In progress / unfinished
+1. **Pinterest #435 status unconfirmed.** Tracker still says `Evaluated`. User ran the Desktop
+   apply flow 10/16 but never confirmed clicking Submit. Ask; if submitted:
+   `node set-status.mjs 435 Applied --note "submitted {date}"` then `node followup-seed.mjs 435`.
+2. **career-ops update v1.36.0 → v1.38.0 available, not applied** (user hadn't answered the prompt).
+   `node update-system.mjs apply --confirm` when approved. After updates, Playwright may need
+   `npx playwright install chromium`.
+3. **Pending inbox refilled to 58 rows** (a Nashville-local wave arrived between sessions).
+   Ranked add-list proposed 10/24, awaiting go-ahead to evaluate:
+   Trilliant Health Healthcare Strategy Analyst, HCA BI Analyst II / DS II / Product Analyst II,
+   Premise Health Analytics Engineering Analyst, EnableComp Data Analyst (Databricks, remote),
+   Pillsbury Analyst–AI Applications, BMI Business Analyst Revenue Intelligence,
+   Affirm Analyst Early Career, Roblox Ops & Analytics Associate, Lyft Data Analyst NYC.
+   Deprioritized: Stripe FDE (6-yr pattern), Thatch (stale), Cohere Pricing (prior reject),
+   intern wave (user has graduated), Amazon/BofA ops rows (off-domain).
+4. **Medpace R/Python programming assessment prep** — gates their interview stage (applied 10/16);
+   prep doc never built (describe/classify/predict tasks, R + pandas idioms).
+5. **URL dedup inactive** — tracker has no URL column. Run `node merge-tracker.mjs --backfill-urls`
+   (idempotent, supports `--dry-run`) to enable the deterministic dedup tier.
+6. **Follow-up debt:** Affirm #390 silent since early Sep; BMI #426 (applied 10/6); others cold.
+   User previously said skip drafting — check `node followup-cadence.mjs --summary` before raising.
+7. **Observation log:** 20+ open entries at `~/.claude/skill-observations/observation-log/`,
+   never reviewed (`last-review-date.txt` = never).
 
-## B. Finished
+## d) Exact next steps (in order)
+1. Confirm Pinterest #435 submission → set Applied + seed follow-up (commands above).
+2. Ask about applying the v1.38.0 update.
+3. On go-ahead: reserve report numbers (`node reserve-report-num.mjs --count N`) and run parallel
+   evaluators on the ranked Nashville + Affirm list (same worker brief as reports 437–443: canonical
+   ATS liveness check, verbatim sponsorship language, header-row TSV to `batch/tracker-additions/`,
+   STOP before any submission). Then `node merge-tracker.mjs` and close pipeline rows.
+4. Build Medpace assessment prep doc.
+5. Triage the remaining ~47 un-shortlisted pending rows with the two-pass playbook (deterministic
+   drops logged to `data/discard.log`, then judgment shortlist).
 
-- v1.36.0 update applied and committed.
-- `/linkedin-scan` skill, its script and its config are built and working (see F, these are untracked).
-- `portals.yml` title exclusions now include `"Sr "` and `"Sr."`.
-- Reports `reports/446-optum-2026-10-23.md` and `reports/447-vanderbilt-university-medical-center-2026-10-23.md`, each with its job description archived verbatim.
-- Tracker rows #446 and #447 merged as `Evaluated`.
-- Resume and cover letter packages in `~/Desktop/Apply'26/Applys/Optum-2381793/` and `~/Desktop/Apply'26/Applys/VUMC/`.
-- HCA Product Analyst II (Job ID 5070275) and HCA BI Analyst II (CAMS, Job ID 4910999) were both confirmed live by Desktop. Both need 3+ years, so both are **skipped** in `data/pipeline.md`. Their job descriptions are saved in `Applys/HCAHealthcare/`.
-- Follow-up drafts (Medpace #408, AppLovin #430, Block #431, BMI #426, the second and final one) were written by Desktop to the follow-ups file in `output/`.
-- Block duplicate: #434 set to `Discarded` (duplicate of #431). Its follow-up reminder is cleared in `data/follow-ups.md`.
-- `cv.md` summary changed from "two years" to "nearly two years" of BI work.
-- This commit includes the data drift in `data/last-sweep.txt` and `data/pdf-index.tsv`.
+## e) Commands to run / test
+- Health: `node verify-pipeline.mjs` · `node doctor.mjs --json` · `node stats.mjs --summary`
+- Update check: `node update-system.mjs check`
+- Scan: `/career-ops scan` (or `node scan.mjs`); LinkedIn complement: `/linkedin-scan` skill
+- Liveness: `node check-liveness.mjs --file <urls-file>` (write output to a file, never pipe to tail)
+- JD fetch: `node fetch-jd.mjs <url>` (Greenhouse/Lever/Ashby/Workday)
+- Tracker writes: `node set-status.mjs <#|company> <State> [--note] [--force]`; adds via header-row
+  TSV in `batch/tracker-additions/` + `node merge-tracker.mjs` — never hand-edit the table
+- CV render: durable template `scripts/cv-template-nathanael.html` ({{SUMMARY}}/{{COMPETENCIES}}
+  placeholders) → `node generate-pdf.mjs output/<slug>.html output/<slug>-DATE.pdf --format=letter
+  --max-pages=1 --strict-pages` (HTML must live inside the repo)
+- Parallel evals: `node reserve-report-num.mjs --count N` / `--release A-B`
 
-## C. In progress / unfinished
-
-- **Applications #446 (Optum, Taleo) and #447 (VUMC, Workday) are NOT submitted.** Both are stopped at sign-in in the Claude Desktop chat "Job application autofill". Claude won't type passwords or create accounts, and Desktop's built-in browser has no Google session.
-- **Knockout answers:** paid corporate analytics experience comes to about 20 months by cv.md dates. Every "2+ years" knockout question gets a truthful No or "1–2 years", which may screen out Optum and possibly VUMC.
-- **Possible CV accuracy fix:** BI internships alone add up to about 16 months. "Over a year" may be more accurate than "nearly two years" in the cv.md summary. Waiting on Nathanael's decision.
-- **Follow-up drafts:** still contain `[Name]` placeholders, and none has been sent.
-- **Also offered, not done:**
-  - Fix the cv template's contact line, which wraps "Nashville,/TN".
-  - Fix unreachable portals (dbt Labs, Agentic Engineering Jobs), using `verify-portals.mjs`.
-  - Delete about 32 `.bak` files left by the updater.
-  - Fill in `modes/_brief.md`.
-  - Create a private backup repo for the custom skills.
-  - Consider the v1.38.0 update, which another session reported as available.
-- In the last GUI test, Desktop's message box held an unrelated unsent draft (about Saban Realty) from another session. It was left untouched.
-
-## D. Exact next steps
-
-1. Sign in to UHG Taleo and VUMC Workday yourself, or let Desktop use Claude in Chrome with your existing Google session and click "Sign in with Google" without entering a password. Then tell the Desktop chat "signed in, continue". It fills each form and stops before Submit.
-2. Review each form and click Submit yourself. Then run:
-   ```bash
-   node set-status.mjs 447 Applied --note "Submitted YYYY-MM-DD via Workday; receipt yes/no"
-   node set-status.mjs 446 Applied --note "Submitted YYYY-MM-DD via Taleo; receipt yes/no"
-   ```
-3. Fill in the `[Name]` placeholders in the follow-up drafts and send them yourself. Log each one in `data/follow-ups.md` and add a note with `set-status.mjs`.
-4. Decide on the cv.md summary wording.
-5. On the new machine, copy over everything in section F **before** running the updater. Otherwise the custom skills are lost.
-
-## E. Commands
-
-```bash
-node update-system.mjs check            # update check (first thing each session)
-node doctor.mjs --json                  # setup / onboarding check
-node scan.mjs                           # ATS portal scan
-node scripts/linkedin-scan.mjs --dry-run   # LinkedIn discovery preview (custom, untracked)
-node scripts/linkedin-scan.mjs          # write hits to data/pipeline.md
-node scripts/linkedin-scan.mjs detail <linkedin url|id>
-node check-liveness.mjs <url>           # posting liveness
-node fetch-jd.mjs <url>                 # JD text from a known ATS API
-node reserve-report-num.mjs --count N   # reserve report numbers before parallel work
-node merge-tracker.mjs                  # merge batch/tracker-additions/*.tsv
-node set-status.mjs <#> <State> --note "..."   # the only way to change tracker rows
-node scripts/cops-render.mjs <spec.json>       # one-page resume + cover PDF (custom, untracked)
-node check-jd-archive.mjs --summary
-node verify-pipeline.mjs                # health check
-node test-all.mjs                       # full test suite
-npm install && npx playwright install chromium  # fresh-machine setup
-```
-
-## F. Outside the repo / not in git (copy these to the new machine)
-
-**Gitignored user data (repo root):** `cv.md`, `config/profile.yml`, `modes/_profile.md`, `modes/_custom.md`, `portals.yml`, `data/*` (tracker, pipeline, follow-ups, scan history, `linkedin-scan.yml`), `reports/`, `output/`, `jds/`, `interview-prep/`, `batch/tracker-additions/`.
-
-**Untracked custom code** (listed in `.git/info/exclude`, so it isn't pushed and has no backup):
-- `.claude/skills/{cops-doctor, cops-liveness, desktop-handoff, inbox-sweep, reauth-gmail, cv-preflight, package-cv, linkedin-scan}/`
-- `scripts/cops-render.mjs`, `scripts/cops-liveness-urls.mjs`, `scripts/linkedin-scan.mjs`
-- `.git/info/exclude` itself, which has to be recreated or the updater prunes these.
-
-**Outside the repo:**
-- `~/Desktop/Apply'26/Applys/` holds the application packages and saved form answers and JDs.
-- `~/.claude/projects/-Users-nathanaeljohnson-GitHub-career-ops/memory/` holds Claude Code's auto-memory.
-- The Claude Desktop chat "Job application autofill" is in the Claude account, so it's available on any machine.
-
-**Services and credentials (names only):**
-- Claude Code with MCP connectors: Firecrawl, Gmail, Google Calendar, Google Drive.
-- Playwright MCP was registered at user scope (`claude mcp add playwright -s user -- npx -y @playwright/mcp@latest`) and needs re-adding on the new machine.
-- GitHub `gh` CLI auth.
-- Optional env vars: `CAREER_OPS_ROOT` / `CAREER_OPS_DATA_DIR` and `CAREER_OPS_TRACKER` (not set in this setup).
-- No API keys are stored in the repo. Taleo, Workday and Google sign-ins are personal and never automated.
-- macOS Accessibility permission is needed for any Code→Desktop GUI automation (osascript and CGEvent).
+## f) Outside the repo (names only, no values)
+- **Apply packages:** `~/Desktop/Apply'26/Applys/{Company}/` — CamelCase folders,
+  "Nathanael Johnson - Resume - {Company}.pdf"; essays/form answers saved there too.
+- **Desktop prompt:** `~/Downloads/claude-desktop-apply-prompt-2026-10-16-pinterest.md`.
+- **Auto-memory:** `~/.claude/projects/-Users-nathanaeljohnson-GitHub-career-ops/memory/`
+  (MEMORY.md index + memory files — copy to keep assistant context).
+- **Observation workspace:** `~/.claude/skill-observations/`.
+- **Gmail OAuth:** `gmail-auth.sh` (custom port fix, committed); env `GMAIL_AUTH_PORT` (default 3456
+  to avoid Next.js :3000 collision); Google OAuth client credential/token files it manages
+  (regenerate on the new machine — draft-only policy, never send).
+- **Env overrides (currently unset, defaults in use):** `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR`,
+  `CAREER_OPS_TRACKER`.
+- **Playwright chromium** (`npx playwright install chromium` on the new machine).
+- **Git remotes:** origin `nathanaelhub/career-ops` (fork), upstream `career-ops-hq/career-ops`.
+- **House rules live in** `modes/_custom.md` + auto-memory: CV email always nathanaeljdj@gmail.com
+  (never school email); never submit applications (user clicks); work-auth answers always truthful
+  (authorized Yes via EAD / sponsorship Yes / citizen-combined No); aggregator listings UNCONFIRMED
+  until found at employer ATS; req IDs in tracker notes for same-title reqs.
